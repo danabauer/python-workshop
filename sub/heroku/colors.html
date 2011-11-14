@@ -7,7 +7,7 @@
             $(document).ready(listenForColorChanges);
 
             function listenForColorChanges() {
-                var url = 'http://localhost:8080/color';
+                var url = '/color';
 
                 $.get(url, function(data, status, $xhr) {
                     $('body').css('background-color', data);
