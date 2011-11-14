@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>Tropo Colors</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(listenForColorChanges);
+
+            function listenForColorChanges() {
+                var url = 'http://localhost:8080/color';
+
+                $.get(url, function(data, status, $xhr) {
+                    $('body').css('background-color', data);
+                    $('body h1').html('The color is ' + data);
+
+                    setTimeout(listenForColorChanges, 1000);
+                });
+            }
+        </script>
+    </head>
+
+    <body>
+        <h1>The color is ...</h1>
+    </body>
+</html>
