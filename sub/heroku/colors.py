@@ -43,5 +43,5 @@ def get_redis_ready():
 
 import os
 root = os.path.dirname(__file__)
-port = os.environ.get('PORT') or 8080
+port = int(os.environ.get('PORT', 8080))
 run_itty(port=port)
