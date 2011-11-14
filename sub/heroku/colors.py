@@ -17,12 +17,23 @@ def color(_):
     return color
 
 
-@post('/change_color/(.*)')
-def change_color(_, color):
+@post('/ask_for_color')
+def ask_for_a_new_color(_):
 
     phone = get_tropo_ready()
+    phone.ask('Gimme a color')
+    phone.on(event='continue', next='/change_color')
+    return phone.RenderJson()
+
+
+@post('/change_color')
+def change_color(_):
+
     store = get_redis_ready()
+    result = tropo.Result(_.body)
+    color = result.getValue()
     store.set('color', color)
+    return ask_for_a_new_color(_)
 
 
 def get_tropo_ready():
