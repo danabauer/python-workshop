@@ -6,7 +6,6 @@ import redis
 @get('/')
 def webpage(_):
 
-    print 'hello'
     return serve_static_file(_, 'colors.html', root)
 
 
@@ -28,11 +27,13 @@ def change_color(_, color):
 
 def get_tropo_ready():
     """Get the phone service ready."""
+
     return tropo.Tropo
 
 
 def get_redis_ready():
     """Get the variable bucket ready."""
+
     store = redis.Redis(
         host='tetra.redistogo.com',
         password='a0577641ea43385552c5a1cdf120d437',
@@ -44,4 +45,4 @@ def get_redis_ready():
 import os
 root = os.path.dirname(__file__)
 port = int(os.environ.get('PORT', 8080))
-run_itty(port=port)
+run_itty(host='0.0.0.0', port=port)
