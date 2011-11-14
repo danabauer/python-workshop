@@ -39,7 +39,7 @@ def change_color(_):
 def get_tropo_ready():
     """Get the phone service ready."""
 
-    return tropo.Tropo
+    return tropo.Tropo()
 
 
 def get_redis_ready():
