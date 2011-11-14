@@ -1,1 +1,1 @@
-web: python colors.py
+web: python heroku/colors.py
