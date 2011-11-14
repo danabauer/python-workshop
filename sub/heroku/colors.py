@@ -41,5 +41,7 @@ def get_redis_ready():
     return store
 
 
+import os
 root = os.path.dirname(__file__)
-run_itty()
+port = os.environ.get('PORT') or 8080
+run_itty(port=port)
