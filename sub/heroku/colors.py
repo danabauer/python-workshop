@@ -25,6 +25,7 @@ def ask_for_a_new_color(_):
     phone.ask(say='Pick a color.',
               choices=color_names)
     phone.on(event='continue', next='/change-color')
+    phone.on(event='incomplete', next='/dont-understand')
     return phone.RenderJson()
 
 
@@ -35,6 +36,17 @@ def change_color(_):
     result = tropo.Result(_.body)
     color = result.getValue()
     store.set('color', color)
+
+    phone = get_tropo_ready()
+    phone.say("Ok, I'll change the page color to " + color)
+    return ask_for_a_new_color(_)
+
+
+@post('/dont-understand')
+def dont_understand(_):
+
+    phone = get_tropo_ready()
+    phone.say("I'm sorry, I didn't understand that color.")
     return ask_for_a_new_color(_)
 
 
