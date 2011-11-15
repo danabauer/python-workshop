@@ -6,15 +6,11 @@ import redis
 
 @get('/')
 def _(request):
-    """Show the web page."""
-
     return serve_static_file(request, 'colors.html', root)
 
 
 @get('/color')
 def _(request):
-    """Get the color that is currently stored in the bucket."""
-
     bucket = get_a_bucket()
 
     color = bucket.get('color') or 'white'
@@ -23,7 +19,6 @@ def _(request):
 
 @post('/ask-for-color')
 def _(request):
-
     phone = get_a_phone()
 
     ask_for_a_new_color(phone)
@@ -32,43 +27,36 @@ def _(request):
 
 @post('/change-color')
 def _(request):
+    bucket = get_a_bucket()
+    phone = get_a_phone()
 
     result = tropo.Result(request.body)
     color = result.getValue()
 
-    bucket = get_a_bucket()
-    phone = get_a_phone()
-
     agree_to_change_the_stored_color(phone, color)
     change_the_stored_color(bucket, color)
     ask_for_a_new_color(phone)
-
     return phone.RenderJson()
 
 
 @post('/dont-understand')
 def _(request):
-
     phone = get_a_phone()
 
     say_i_dont_understand(phone)
     ask_for_a_new_color(phone)
-
     return phone.RenderJson()
 
 
 def agree_to_change_the_stored_color(phone, color):
-
     phone.say("Ok, I'll change the page color to " + color)
 
 
 def change_the_stored_color(bucket, color):
-
     bucket.set('color', color)
 
 
 def ask_for_a_new_color(phone):
-
     phone.ask(say='Pick a color.',
               choices=color_names)
     phone.on(event='continue', next='/change-color')
@@ -76,19 +64,14 @@ def ask_for_a_new_color(phone):
 
 
 def say_i_dont_understand(phone):
-
     phone.say("I'm sorry, I didn't understand that color.")
 
 
 def get_a_phone():
-    """Get the phone service ready."""
-
     return tropo.Tropo()
 
 
 def get_a_bucket():
-    """Get the variable bucket ready."""
-
     bucket = redis.Redis(
         host='tetra.redistogo.com',
         password='a0577641ea43385552c5a1cdf120d437',
