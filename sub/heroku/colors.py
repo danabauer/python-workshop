@@ -20,9 +20,9 @@ def do_it(_):
 
 
 @post('/color')
-def do_it(_):
+def do_it(request):
 
-    color = _.body
+    color = request.body
     bucket = get_a_bucket()
 
     bucket.set('color', color)
