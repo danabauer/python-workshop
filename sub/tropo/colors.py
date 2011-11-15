@@ -8,18 +8,21 @@ color_names = (
 
 def run():
 
-    # The statement "while True" is the same as "forever".
+    say("Tell me a color and I'll show it to you.")
+
     while True:
 
-        # One "=" tells Python to store the value in the variable.
         answer = ask("What color do you want?", {'choices': color_names})
-        color = answer.value
 
-        # Two "==" means "is equal to".
-        if color == 'NO_MATCH':
+        if answer.value == 'NO_MATCH':
             say ("I'm sorry, I didn't understand.  Please try again.")
 
+        elif answer.value == 'Stop':
+            say("Ok, I'll stop.  Goodbye.")
+            break
+
         else:
+            color = answer.value
             save_color(color)
             say("Ok, I'll change the color to " + color)
 
