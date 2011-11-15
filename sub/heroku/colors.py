@@ -59,4 +59,4 @@ def get_redis_ready():
 import os
 root = os.path.dirname(__file__)
 port = int(os.environ.get('PORT', 8080))
-run_itty(host='localhost', port=port)
+run_itty(host='0.0.0.0', port=port)
