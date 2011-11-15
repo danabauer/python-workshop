@@ -21,8 +21,10 @@ def color(_):
 def ask_for_a_new_color(_):
 
     phone = get_tropo_ready()
-    phone.ask('red, green, blue', say='Pick a color.')
-    phone.on(event='continue', next='/change-color')
+    print phone
+    phone.record(say='Pick a color.',
+                 transcription={'url':'http://tropo-colors.herokuapp.com/change-color'})
+    phone.on(event='continue', next='/ask-for-color')
     return phone.RenderJson()
 
 
@@ -30,10 +32,11 @@ def ask_for_a_new_color(_):
 def change_color(_):
 
     store = get_redis_ready()
+    print _.body
     result = tropo.Result(_.body)
     color = result.getValue()
     store.set('color', color)
-    return ask_for_a_new_color(_)
+    return color
 
 
 def get_tropo_ready():
@@ -56,4 +59,4 @@ def get_redis_ready():
 import os
 root = os.path.dirname(__file__)
 port = int(os.environ.get('PORT', 8080))
-run_itty(host='0.0.0.0', port=port)
+run_itty(host='localhost', port=port)
