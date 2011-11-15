@@ -13,58 +13,86 @@ def webpage(_):
 @get('/color')
 def color(_):
 
-    store = get_redis_ready()
-    color = store.get('color') or 'white'
+    bucket = get_a_bucket()
+
+    color = bucket.get('color') or 'white'
     return color
 
 
 @post('/ask-for-color')
-def ask_for_a_new_color(_):
+def do_it(_):
 
-    phone = get_tropo_ready()
-    phone.ask(say='Pick a color.',
-              choices=color_names)
-    phone.on(event='continue', next='/change-color')
-    phone.on(event='incomplete', next='/dont-understand')
+    phone = get_a_phone()
+
+    ask_for_a_new_color(phone)
     return phone.RenderJson()
 
 
 @post('/change-color')
-def change_color(_):
+def do_it(_):
 
-    store = get_redis_ready()
     result = tropo.Result(_.body)
     color = result.getValue()
-    store.set('color', color)
 
-    phone = get_tropo_ready()
-    phone.say("Ok, I'll change the page color to " + color)
-    return ask_for_a_new_color(_)
+    bucket = get_a_bucket()
+    phone = get_a_phone()
+
+    agree_to_change_the_stored_color(phone, color)
+    change_the_stored_color(bucket, color)
+    ask_for_a_new_color(phone)
+
+    return phone.RenderJson()
 
 
 @post('/dont-understand')
-def dont_understand(_):
+def do_it(_):
 
-    phone = get_tropo_ready()
+    phone = get_a_phone()
+
+    say_i_dont_understand(phone)
+    ask_for_a_new_color(phone)
+
+    return phone.RenderJson()
+
+
+def agree_to_change_the_stored_color(phone, color):
+
+    phone.say("Ok, I'll change the page color to " + color)
+
+
+def change_the_stored_color(bucket, color):
+
+    bucket.set('color', color)
+
+
+def ask_for_a_new_color(phone):
+
+    phone.ask(say='Pick a color.',
+              choices=color_names)
+    phone.on(event='continue', next='/change-color')
+    phone.on(event='incomplete', next='/dont-understand')
+
+
+def say_i_dont_understand(phone):
+
     phone.say("I'm sorry, I didn't understand that color.")
-    return ask_for_a_new_color(_)
 
 
-def get_tropo_ready():
+def get_a_phone():
     """Get the phone service ready."""
 
     return tropo.Tropo()
 
 
-def get_redis_ready():
+def get_a_bucket():
     """Get the variable bucket ready."""
 
-    store = redis.Redis(
+    bucket = redis.Redis(
         host='tetra.redistogo.com',
         password='a0577641ea43385552c5a1cdf120d437',
         port=9463,
         db=0)
-    return store
+    return bucket
 
 
 import os
