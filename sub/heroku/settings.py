@@ -6,7 +6,7 @@ ROOT = os.path.dirname(__file__)
 ##
 # Redis
 
-redis_info = urlparse.urlparse(os.environ.get('REDISTOGO_URL', 'redis://user:pass@host:9999/')
+redis_info = urlparse.urlparse(os.environ.get('REDISTOGO_URL', 'redis://user:pass@host:9999/'))
 
 REDIS = {
     'host':     redis_info.hostname,
