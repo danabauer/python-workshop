@@ -6,7 +6,7 @@ color_names = (
 def save_color(color):
     from httplib import HTTPConnection
     conn = HTTPConnection('tropo-colors.herokuapp.com')
-    conn.request('POST', '/change-color/' + color)
+    conn.request('POST', '/color', body=color)
 
 
 while True:
