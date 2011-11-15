@@ -19,6 +19,15 @@ def color(_):
     return color
 
 
+@get('/change-color/(?P<color>.*)')
+def do_it(_, color):
+
+    bucket = get_a_bucket()
+
+    bucket.set('color', color)
+    return color
+
+
 @post('/ask-for-color')
 def do_it(_):
 
