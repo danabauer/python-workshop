@@ -3,16 +3,12 @@ import redis
 
 
 @get('/')
-def do_it(_):
-    """Show the web page."""
-
+def _(request):
     return serve_static_file(_, 'colors.html', root)
 
 
 @get('/color')
-def do_it(_):
-    """Get the color that is currently stored in the bucket."""
-
+def _(request):
     bucket = get_a_bucket()
 
     color = bucket.get('color') or 'white'
@@ -20,18 +16,15 @@ def do_it(_):
 
 
 @post('/color')
-def do_it(request):
-
-    color = request.body
+def _(request):
     bucket = get_a_bucket()
 
+    color = request.body
     bucket.set('color', color)
     return color
 
 
 def get_a_bucket():
-    """Get the variable bucket ready."""
-
     bucket = redis.Redis(
         host='tetra.redistogo.com',
         password='a0577641ea43385552c5a1cdf120d437',
