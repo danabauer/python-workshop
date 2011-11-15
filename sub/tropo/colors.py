@@ -23,11 +23,11 @@ def run():
 
         else:
             color = answer.value
-            save_color(color)
+            save(color)
             say("Ok, I'll change the color to " + color)
 
 
-def save_color(color):
+def save(color):
     conn = HTTPConnection('tropo-colors.herokuapp.com')
     conn.request('POST', '/color', body=color)
 
