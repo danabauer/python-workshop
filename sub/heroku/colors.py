@@ -1,5 +1,5 @@
 from itty import *
-import tropo
+import tropo_ext as tropo
 import redis
 
 
@@ -21,7 +21,6 @@ def color(_):
 def ask_for_a_new_color(_):
 
     phone = get_tropo_ready()
-    print phone
     phone.record(say='Pick a color.',
                  transcription={'url':'http://tropo-colors.herokuapp.com/change-color'})
     phone.on(event='continue', next='/ask-for-color')
@@ -32,9 +31,8 @@ def ask_for_a_new_color(_):
 def change_color(_):
 
     store = get_redis_ready()
-    print _.body
-    result = tropo.Result(_.body)
-    color = result.getValue()
+    transcription = tropo.Transcription(_.body)
+    color = transcription.getValue()
     store.set('color', color)
     return color
 
