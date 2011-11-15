@@ -1,17 +1,17 @@
 from itty import *
-from css_color_names import color_names
-import tropo_ext as tropo
 import redis
 
 
 @get('/')
-def webpage(_):
+def do_it(_):
+    """Show the web page."""
 
     return serve_static_file(_, 'colors.html', root)
 
 
 @get('/color')
-def color(_):
+def do_it(_):
+    """Get the color that is currently stored in the bucket."""
 
     bucket = get_a_bucket()
 
@@ -19,7 +19,23 @@ def color(_):
     return color
 
 
-@get('/change-color/(?P<color>.*)')
+def get_a_bucket():
+    """Get the variable bucket ready."""
+
+    bucket = redis.Redis(
+        host='tetra.redistogo.com',
+        password='a0577641ea43385552c5a1cdf120d437',
+        port=9463,
+        db=0)
+    return bucket
+
+
+##
+# This is for the simple Tropo script version of the program.  Upload the script
+# in tropo/colors.py to your Tropo account, and point the URL in that file to
+# the following route.
+
+@post('/change-color/(?P<color>+*)')
 def do_it(_, color):
 
     bucket = get_a_bucket()
@@ -27,6 +43,14 @@ def do_it(_, color):
     bucket.set('color', color)
     return color
 
+
+##
+# This is for a more complex version of the program.  It does not rely on any
+# Tropo-hosted scripts.  Point a Tropo app at the following route to start the
+# program.
+
+from css_color_names import color_names
+import tropo
 
 @post('/ask-for-color')
 def do_it(_):
@@ -91,17 +115,6 @@ def get_a_phone():
     """Get the phone service ready."""
 
     return tropo.Tropo()
-
-
-def get_a_bucket():
-    """Get the variable bucket ready."""
-
-    bucket = redis.Redis(
-        host='tetra.redistogo.com',
-        password='a0577641ea43385552c5a1cdf120d437',
-        port=9463,
-        db=0)
-    return bucket
 
 
 import os
