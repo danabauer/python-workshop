@@ -1,16 +1,18 @@
+from css_color_names import color_names
 from itty import *
+import tropo
 import redis
 
 
 @get('/')
-def do_it(_):
+def _(request):
     """Show the web page."""
 
-    return serve_static_file(_, 'colors.html', root)
+    return serve_static_file(request, 'colors.html', root)
 
 
 @get('/color')
-def do_it(_):
+def _(request):
     """Get the color that is currently stored in the bucket."""
 
     bucket = get_a_bucket()
@@ -19,42 +21,8 @@ def do_it(_):
     return color
 
 
-def get_a_bucket():
-    """Get the variable bucket ready."""
-
-    bucket = redis.Redis(
-        host='tetra.redistogo.com',
-        password='a0577641ea43385552c5a1cdf120d437',
-        port=9463,
-        db=0)
-    return bucket
-
-
-##
-# This is for the simple Tropo script version of the program.  Upload the script
-# in tropo/colors.py to your Tropo account, and point the URL in that file to
-# the following route.
-
-@post('/color')
-def do_it(_):
-
-    color = _.body
-    bucket = get_a_bucket()
-
-    bucket.set('color', color)
-    return color
-
-
-##
-# This is for a more complex version of the program.  It does not rely on any
-# Tropo-hosted scripts.  Point a Tropo app at the following route to start the
-# program.
-
-from css_color_names import color_names
-import tropo
-
 @post('/ask-for-color')
-def do_it(_):
+def _(request):
 
     phone = get_a_phone()
 
@@ -63,9 +31,9 @@ def do_it(_):
 
 
 @post('/change-color')
-def do_it(_):
+def _(request):
 
-    result = tropo.Result(_.body)
+    result = tropo.Result(request.body)
     color = result.getValue()
 
     bucket = get_a_bucket()
@@ -79,7 +47,7 @@ def do_it(_):
 
 
 @post('/dont-understand')
-def do_it(_):
+def _(request):
 
     phone = get_a_phone()
 
@@ -116,6 +84,17 @@ def get_a_phone():
     """Get the phone service ready."""
 
     return tropo.Tropo()
+
+
+def get_a_bucket():
+    """Get the variable bucket ready."""
+
+    bucket = redis.Redis(
+        host='tetra.redistogo.com',
+        password='a0577641ea43385552c5a1cdf120d437',
+        port=9463,
+        db=0)
+    return bucket
 
 
 import os
