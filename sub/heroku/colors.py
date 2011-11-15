@@ -23,7 +23,7 @@ def ask_for_a_new_color(_):
 
     phone = get_tropo_ready()
     phone.ask(say='Pick a color.',
-              choices=colors_names)
+              choices=color_names)
     phone.on(event='continue', next='/change-color')
     return phone.RenderJson()
 
