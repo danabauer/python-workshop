@@ -35,7 +35,7 @@ def change_color(_):
     result = tropo.Result(_.body)
     color = result.getValue()
     store.set('color', color)
-    return ask_for_new_color(_)
+    return ask_for_a_new_color(_)
 
 
 def get_tropo_ready():
