@@ -35,7 +35,7 @@ def get_a_bucket():
 # in tropo/colors.py to your Tropo account, and point the URL in that file to
 # the following route.
 
-@post('/change-color/(?P<color>+*)')
+@post('/change-color/(?P<color>.+)')
 def do_it(_, color):
 
     bucket = get_a_bucket()
