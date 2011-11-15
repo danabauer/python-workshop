@@ -2,11 +2,12 @@ from css_color_names import color_names
 from itty import *
 import tropo
 import redis
+import settings
 
 
 @get('/')
 def _(request):
-    return serve_static_file(request, 'colors.html', root)
+    return serve_static_file(request, 'colors.html', settings.ROOT)
 
 
 @get('/color')
@@ -72,15 +73,8 @@ def get_a_phone():
 
 
 def get_a_bucket():
-    bucket = redis.Redis(
-        host='tetra.redistogo.com',
-        password='a0577641ea43385552c5a1cdf120d437',
-        port=9463,
-        db=0)
+    bucket = redis.Redis(**settings.REDIS)
     return bucket
 
 
-import os
-root = os.path.dirname(__file__)
-port = int(os.environ.get('PORT', 8080))
-run_itty(host='0.0.0.0', port=port)
+run_itty(**settings.ITTY)
