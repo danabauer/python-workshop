@@ -3,7 +3,8 @@ from httplib import HTTPConnection
 
 color_names = (
     'White, Black, Gray, Red, Maroon, Orange, Brown, Yellow, Olive, '
-    'Lime, Green, Cyan, Teal, Blue, DarkBlue, Fuchsia, Violet, Purple')
+    'Lime, Green, Cyan, Teal, Blue, DarkBlue, Fuchsia, Violet, Purple, '
+    'Stop')
 
 
 def run():
