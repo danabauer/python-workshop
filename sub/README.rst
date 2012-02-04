@@ -54,10 +54,10 @@ Itty is::
 
 A minor difference to be sure, but one big enough to sway me.
 
-Why two apps?
--------------
+Why the Tropo hosted script instead of HTTP API?
+------------------------------------------------
 
-There are two Itty apps in the heroku folder.  At first, I used the Tropo web
+There are two ways to use Tropo, and I picked one.  At first, I used the Tropo web
 API, but decided to simplify things by using a Tropo script instead for two
 reasons:
 
