@@ -1,10 +1,16 @@
 from httplib import HTTPConnection
+# This script also uses two function from the Tropo module: 'ask', and 'say'.
+# Normally this would look like:
+#
+# from tropo import ask, say
+#
+# However, in this case, these functions are imported automatically from the
+# 'tropo' module on Tropo's server.
 
 
 color_names = (
     'White, Black, Gray, Red, Maroon, Orange, Brown, Yellow, Olive, '
-    'Lime, Green, Cyan, Teal, Blue, DarkBlue, Fuchsia, Violet, Purple, '
-    'Stop')
+    'Lime, Green, Cyan, Teal, Blue, DarkBlue, Fuchsia, Violet, Purple')
 
 
 def run():
@@ -13,10 +19,11 @@ def run():
 
     while True:
 
-        answer = ask("What color do you want?", {'choices': color_names})
+        answer = ask("What color do you want?",
+                     {'choices': color_names + ', Stop'})
 
         if answer.value == 'NO_MATCH':
-            say ("I'm sorry, I didn't understand.  Please try again.")
+            say("I'm sorry, I didn't understand.  Please try again.")
 
         elif answer.value == 'Stop':
             say("Ok, I'll stop.  Goodbye.")
