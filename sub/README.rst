@@ -39,8 +39,7 @@ So, I started to try Flask (zachwill has a great flask-heroku starter project
 on github), but I found that even this seemed to obfuscate what I was trying
 to get across.  In addition to my framework being light-weight, I wanted my
 code to be as light-weight as possible as well, since this is a pedagogical
-tool.  I don't mind Flask myself (as an experienced developer), but I felt that
-things like::
+tool.  I don't mind Flask myself, but I felt that things like::
 
     @request('/colors', methods=['POST'])
     ...
