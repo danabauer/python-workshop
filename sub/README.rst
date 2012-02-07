@@ -10,10 +10,10 @@ Explanation
 
 There are three parts to this application:
 
-  * A Tropo script (``tropo/colors.py``) that asks the user for a color,
-  * A server-side Itty app (``heroku/simple_colors.py``) that handles the
-    storage and retrieval of the current color from a Redis data store, and
-  * A client-side script that checks on updates to the stored color.
+* A Tropo script (``tropo/colors.py``) that asks the user for a color,
+* A server-side Itty app (``heroku/simple_colors.py``) that handles the
+  storage and retrieval of the current color from a Redis data store, and
+* A client-side script that checks on updates to the stored color.
 
 The Tropo script is made to be uploaded to a Tropo account.  The Itty app can
 be uploaded to Heroku (or anywhere else that can run and serve Python apps).
@@ -60,8 +60,9 @@ There are two ways to use Tropo, and I picked one.  At first, I used the Tropo w
 API, but decided to simplify things by using a Tropo script instead for two
 reasons:
 
-  * I was afraid that the overhead of explaining the HTTP back-and-forth that
-    is done between Tropo and the server app would get in the way of the
-    programming concepts.
-  * Using the script, I get to use more of simpler concepts like iteration and
-    conditionals.
+* I was afraid that the overhead of explaining the HTTP back-and-forth that
+  is done between Tropo and the server app would get in the way of the
+  programming concepts.
+* Using the script, I get to use more of simpler concepts like iteration and
+  conditionals, reinforcing these concepts and keeping the async HTTP requests
+  to a minimum.
