@@ -1,6 +1,6 @@
 """
 Script is from Peter Novig's post at http://norvig.com/spell-correct.html
-Captured on 5/14/2013 for use on Python Workshops
+Date: 5/14/2013 
 
 """
 
