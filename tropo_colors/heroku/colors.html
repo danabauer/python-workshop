@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Tropo Colors</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(listenForColorChanges);
+
+            function listenForColorChanges() {
+                var url = '/color';
+
+                $.get(url, function(data, status, $xhr) {
+                    $('body').css('background-color', data);
+                    $('body h1').html('The color is ' + data);
+
+                    setTimeout(listenForColorChanges, 1000);
+                });
+            }
+        </script>
+    </head>
+
+    <body>
+        <h1>The color is ...</h1>
+
+        <p>Call (415)889-8683 to change the color.</p>
+        <p><a href="https://github.com/mjumbewu/tropo_colors">(see the code...)</a></p>
+    </body>
+</html>
